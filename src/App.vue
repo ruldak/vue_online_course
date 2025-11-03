@@ -22,7 +22,7 @@
     </main>
 
     <footer class="app-footer">
-      <p>View on GitHub: <a href="[YOUR_GITHUB_REPO_URL]" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
+      <p>View on GitHub: <a href="https://github.com/ruldak/vue_online_course" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
     </footer>
   </div>
 </template>

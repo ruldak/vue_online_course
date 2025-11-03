@@ -31,11 +31,11 @@ To run this frontend application locally, follow these steps:
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/ruldak/vue_online_course.git your_directory
     ```
 2.  **Navigate to the project directory:**
     ```bash
-    cd online-course-with-payment-integration
+    cd your_directory
     ```
 3.  **Install dependencies:**
     ```bash
