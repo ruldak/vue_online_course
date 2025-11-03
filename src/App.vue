@@ -20,6 +20,10 @@
     <main class="main-content">
       <router-view />
     </main>
+
+    <footer class="app-footer">
+      <p>View on GitHub: <a href="[YOUR_GITHUB_REPO_URL]" target="_blank" rel="noopener noreferrer">GitHub Repository</a></p>
+    </footer>
   </div>
 </template>
 
@@ -247,5 +251,29 @@ body {
     text-align: center;
     padding: 2rem;
     font-size: 1.2rem;
+}
+
+/* Footer Styles */
+.app-footer {
+  background-color: var(--secondary-color);
+  color: white;
+  text-align: center;
+  padding: 1.5rem 2rem;
+  margin-top: auto; /* Pushes the footer to the bottom */
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.app-footer p {
+  margin: 0.5rem 0;
+}
+
+.app-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
 }
 </style>
