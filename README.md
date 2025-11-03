@@ -46,11 +46,7 @@ To run this frontend application locally, follow these steps:
     npm run dev
     ```
 
-## API Endpoint
-
-The backend API is hosted at the following endpoint. Please ensure it is running and accessible for this frontend application to function correctly.
-
-*   **API Base URL:** `[Your API Base URL Here]`
+**Check out the Backend Repository here:** [django_api_online_course_with_payment_integration](https://github.com/ruldak/django_api_online_course_with_payment_integration)
 
 ## API Documentation
 
