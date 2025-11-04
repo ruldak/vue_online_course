@@ -9,7 +9,7 @@
     <label for="order-by">Order By: </label>
     <select id="order-by" v-model="filters.ordering" name="myOption">
       <option value="-created_at">Newest</option>
-      <option value="rating">Highest Rated</option>
+      <option value="-rating">Highest Rated</option>
       <option value="-price">Price</option>
     </select>
     <button class="btn" @click="fetchFilter">submit</button>
@@ -35,7 +35,7 @@ import api from '../services/api';
 let filters = reactive({
   category: "",
   price: "",
-  ordering: "rating"
+  ordering: "-rating"
 })
 
 const categories = ref([])

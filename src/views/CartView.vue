@@ -13,7 +13,7 @@
             <span class="item-name">{{ item.course_name }}</span>
             <span class="item-price">${{ item.course_price }}</span>
             <span v-if="item.status == 'sold'" class="item-price">SOLD</span>
-            <button class="removeBtn btn btn-danger" @click="removeItem(item.id)">Remove</button>
+            <button v-if="item.status === 'in_cart'" class="removeBtn btn btn-danger" @click="removeItem(item.id)">Remove</button>
           </li>
         </ul>
         <div class="cart-summary">
@@ -26,7 +26,7 @@
             <p><strong>Email:</strong> sb-hb9du47069562@personal.example.com</p>
             <p><strong>password:</strong> 8cF//@08</p>
           </div>
-          <button :disabled="cart.items.length === 1 && cart.items[0].status === 'sold'" class="btn" @click="handlePayPalCheckout">Checkout with PayPal</button>
+          <button :disabled="isAllSold" class="btn" @click="handlePayPalCheckout">Checkout with PayPal</button>
           <br>
           <br>
           <div>
@@ -35,7 +35,7 @@
             <p><strong>Expiration Date:</strong> Any future date (e.g., 12/34)</p>
             <p><strong>CVC:</strong>  Any 3 digits (e.g., 123)</p>
           </div>
-          <button :disabled="cart.items.length === 1 && cart.items[0].status === 'sold'" class="btn" @click="handleStripeCheckout">Checkout with card</button>
+          <button :disabled="isAllSold" class="btn" @click="handleStripeCheckout">Checkout with card</button>
         </div>
       </template>
     </div>
@@ -43,28 +43,35 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import api from '../services/api';
 import Cookies from 'js-cookie';
 
 const cart = ref(null);
 const loading = ref(true);
 const error = ref(null);
+const isAllSold = ref(true);
+
+const checkCartItemStatus = () => {
+  if (cart.value && Array.isArray(cart.value.items)) {
+    const hasInCart = cart.value.items.some(item => item.status === "in_cart")
+    isAllSold.value = !hasInCart
+  } else {
+    isAllSold.value = true
+  }
+}
 
 const fetchCart = async () => {
   loading.value = true;
   try {
     const response = await api.getCart();
     cart.value = (response.data[0].items.length > 0) ? response.data[0] : { items: [], total_price: '0.00' };
-    console.log("fetch cart response:")
-    console.log(response.data)
-    console.log("askasokjak")
-    console.log(response.data[0].items.length)
   } catch (err) {
     error.value = 'Failed to load cart.';
     console.error(err);
   } finally {
     loading.value = false;
+    checkCartItemStatus();
   }
 };
 
@@ -111,6 +118,10 @@ const handleStripeCheckout = async () => {
     console.error(err);
   }
 };
+
+watch(cart, () => {
+  checkCartItemStatus()
+}, { deep: true })
 
 onMounted(fetchCart);
 </script>
