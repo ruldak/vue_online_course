@@ -21,9 +21,20 @@
             <span>Total (USD)</span>
             <strong>${{ cart.total_price }}</strong>
           </div>
+          <div>
+            <p>For PayPal checkout testing (sandbox mode — no real money involved), you can use the following credentials:</p>
+            <p><strong>Email:</strong> sb-hb9du47069562@personal.example.com</p>
+            <p><strong>password:</strong> 8cF//@08</p>
+          </div>
           <button :disabled="cart.items.length === 1 && cart.items[0].status === 'sold'" class="btn" @click="handlePayPalCheckout">Checkout with PayPal</button>
           <br>
           <br>
+          <div>
+            <p>For Stripe checkout testing (sandbox mode — no real money used), you can use the following test card:</p>
+            <p><strong>Card Number:</strong> 4242 4242 4242 4242</p>
+            <p><strong>Expiration Date:</strong> Any future date (e.g., 12/34)</p>
+            <p><strong>CVC:</strong>  Any 3 digits (e.g., 123)</p>
+          </div>
           <button :disabled="cart.items.length === 1 && cart.items[0].status === 'sold'" class="btn" @click="handleStripeCheckout">Checkout with card</button>
         </div>
       </template>
