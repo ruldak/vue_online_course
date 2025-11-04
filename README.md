@@ -52,5 +52,5 @@ To run this frontend application locally, follow these steps:
 
 Comprehensive documentation for the backend API, including all available endpoints, request/response schemas, and testing instructions, can be found at the links below:
 
-*   **Swagger UI:** `[Link to Your Swagger Documentation Here]`
-*   **ReDoc:** `[Link to Your ReDoc Documentation Here]`
+*   **Swagger UI:** `https://onlinecourse0lll0.pythonanywhere.com/api/docs/`
+*   **ReDoc:** `https://onlinecourse0lll0.pythonanywhere.com/api/redoc/`
