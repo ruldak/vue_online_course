@@ -52,8 +52,10 @@ const handleAddToCart = async () => {
     await api.addToCart(props.id);
     addSuccess.value = true;
   } catch (err) {
-    if (err.response && err.response.data.course) {
-      addError.value = err.response.data.course[0];
+    console.log("add to cart error:")
+    console.log(err.response.data)
+    if (err.response && err.response.data.error) {
+      addError.value = err.response.data.error.message;
     } else {
       addError.value = 'Failed to add to cart. Please login first.';
     }
