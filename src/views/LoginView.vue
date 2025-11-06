@@ -14,7 +14,7 @@
               <input type="password" id="password" class="form-control" v-model="password" required>
             </div>
             <div v-if="error" class="alert alert-danger">{{ error }}</div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <button :disabled="loading" type="submit" class="btn btn-primary w-100">{{loading?'loading...':'Login'}}</button>
           </form>
         </div>
       </div>
@@ -32,9 +32,11 @@ const username = ref('');
 const password = ref('');
 const error = ref(null);
 const router = useRouter();
+const loading = ref(false)
 
 const handleLogin = async () => {
   error.value = null;
+  loading.value = true
   try {
     const response = await api.login({
       username: username.value,
@@ -46,6 +48,8 @@ const handleLogin = async () => {
   } catch (err) {
     error.value = 'Failed to login. Check username and password.';
     console.error(err);
+  } finally {
+    loading.value = false
   }
 };
 </script>

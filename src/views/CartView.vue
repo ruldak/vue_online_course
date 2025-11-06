@@ -36,7 +36,7 @@
               <p class="small"><strong>Email:</strong> sb-hb9du47069562@personal.example.com</p>
               <p class="small"><strong>password:</strong> 8cF//@08</p>
             </div>
-            <button :disabled="isAllSold" class="btn btn-primary w-100 mt-3" @click="handlePayPalCheckout">Checkout with PayPal</button>
+            <button :disabled="isAllSold || coLoading" class="btn btn-primary w-100 mt-3" @click="handlePayPalCheckout">{{coLoading? 'Loading...':'Checkout with PayPal'}}</button>
             <hr>
             <div class="mt-3">
               <p class="small">For Stripe checkout testing (sandbox mode — no real money used), you can use the following test card:</p>
@@ -44,7 +44,7 @@
               <p class="small"><strong>Expiration Date:</strong> Any future date (e.g., 12/34)</p>
               <p class="small"><strong>CVC:</strong>  Any 3 digits (e.g., 123)</p>
             </div>
-            <button :disabled="isAllSold" class="btn btn-primary w-100 mt-3" @click="handleStripeCheckout">Checkout with card</button>
+            <button :disabled="isAllSold || coLoading" class="btn btn-primary w-100 mt-3" @click="handleStripeCheckout">{{coLoading? 'Loading...':'Checkout with card'}}</button>
           </div>
         </div>
       </div>
@@ -61,6 +61,7 @@ const cart = ref(null);
 const loading = ref(true);
 const error = ref(null);
 const isAllSold = ref(true);
+const coLoading = ref(false);
 
 const checkCartItemStatus = () => {
   if (cart.value && Array.isArray(cart.value.items)) {
@@ -98,6 +99,7 @@ const removeItem = async (itemId) => {
 
 const handlePayPalCheckout = async () => {
   alert("Redirecting to PayPal...");
+  coLoading.value = true
   try {
     const response = await api.createPaypalOrder();
     console.log("handle paypal co response: ")
@@ -110,11 +112,14 @@ const handlePayPalCheckout = async () => {
   } catch (err) {
     alert('Failed to create PayPal order.');
     console.error(err);
+  } finally {
+    coLoading.value = false
   }
 };
 
 const handleStripeCheckout = async () => {
   alert("Redirecting to Checkout page...");
+  coLoading.value = true
   try {
     const response = await api.createStripeOrder();
     console.log("handle stripe co response: ")
@@ -126,6 +131,8 @@ const handleStripeCheckout = async () => {
   } catch (err) {
     alert('Failed to create Stripe order.');
     console.error(err);
+  } finally {
+    coLoading.value = false
   }
 };
 

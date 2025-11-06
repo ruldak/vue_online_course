@@ -10,7 +10,7 @@
               <input type="text" id="username" class="form-control" v-model="form.username" required>
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
+              <label for="email" class="form-label">Email (Optional)</label>
               <input type="email" id="email" class="form-control" v-model="form.email">
             </div>
             <div class="mb-3">
@@ -29,7 +29,7 @@
                 </ul>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Register</button>
+            <button :disabled="loading" type="submit" class="btn btn-primary w-100">{{loading?'Loading...':'Register'}}</button>
           </form>
         </div>
       </div>
@@ -50,9 +50,11 @@ const form = reactive({
 });
 const error = ref(null);
 const router = useRouter();
+const loading = ref(false);
 
 const handleRegister = async () => {
   error.value = null;
+  loading.value = true;
   if (form.password !== form.password2) {
     error.value = { password: ["Passwords do not match."] };
     return;
@@ -65,6 +67,8 @@ const handleRegister = async () => {
     console.error(err);
     console.log("error register response:")
     console.log(error.value)
+  } finally {
+    loading.value = false;
   }
 };
 </script>
