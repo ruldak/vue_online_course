@@ -3,41 +3,51 @@
     <h1>My Cart</h1>
     <div v-if="loading" class="loading-spinner">Loading...</div>
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
-    <div v-if="cart" class="cart-container">
-      <div v-if="cart.items.length === 0">
-        <p>Your cart is empty.</p>
-      </div>
-      <template v-else>
-        <ul class="cart-items-list">
-          <li v-for="item in cart.items" :key="item.id" :class="['cart-item', item.status]">
-            <span class="item-name">{{ item.course_name }}</span>
-            <span class="item-price">${{ item.course_price }}</span>
-            <span v-if="item.status == 'sold'" class="item-price">SOLD</span>
-            <button v-if="item.status === 'in_cart'" class="removeBtn btn btn-danger" @click="removeItem(item.id)">Remove</button>
+    <div v-if="cart" class="row">
+      <div class="col-md-8">
+        <div v-if="cart.items.length === 0">
+          <p>Your cart is empty.</p>
+        </div>
+        <ul v-else class="list-group">
+          <li v-for="item in cart.items" :key="item.id" class="list-group-item d-flex justify-content-between align-items-center" :class="{ 'text-muted': item.status === 'sold' }">
+            <div>
+              <h5 class="mb-1">{{ item.course_name }}</h5>
+              <small>${{ item.course_price }}</small>
+            </div>
+            <div>
+              <span v-if="item.status == 'sold'" class="badge bg-secondary">SOLD</span>
+              <button v-if="item.status === 'in_cart'" class="btn btn-danger btn-sm" @click="removeItem(item.id)">Remove</button>
+            </div>
           </li>
         </ul>
-        <div class="cart-summary">
-          <div class="total-price">
-            <span>Total (USD)</span>
-            <strong>${{ cart.total_price }}</strong>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Cart Summary</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total (USD)</span>
+                <strong>${{ cart.total_price }}</strong>
+              </li>
+            </ul>
+            <div class="mt-3">
+              <p class="small">For PayPal checkout testing (sandbox mode — no real money involved), you can use the following credentials:</p>
+              <p class="small"><strong>Email:</strong> sb-hb9du47069562@personal.example.com</p>
+              <p class="small"><strong>password:</strong> 8cF//@08</p>
+            </div>
+            <button :disabled="isAllSold" class="btn btn-primary w-100 mt-3" @click="handlePayPalCheckout">Checkout with PayPal</button>
+            <hr>
+            <div class="mt-3">
+              <p class="small">For Stripe checkout testing (sandbox mode — no real money used), you can use the following test card:</p>
+              <p class="small"><strong>Card Number:</strong> 4242 4242 4242 4242</p>
+              <p class="small"><strong>Expiration Date:</strong> Any future date (e.g., 12/34)</p>
+              <p class="small"><strong>CVC:</strong>  Any 3 digits (e.g., 123)</p>
+            </div>
+            <button :disabled="isAllSold" class="btn btn-primary w-100 mt-3" @click="handleStripeCheckout">Checkout with card</button>
           </div>
-          <div>
-            <p>For PayPal checkout testing (sandbox mode — no real money involved), you can use the following credentials:</p>
-            <p><strong>Email:</strong> sb-hb9du47069562@personal.example.com</p>
-            <p><strong>password:</strong> 8cF//@08</p>
-          </div>
-          <button :disabled="isAllSold" class="btn" @click="handlePayPalCheckout">Checkout with PayPal</button>
-          <br>
-          <br>
-          <div>
-            <p>For Stripe checkout testing (sandbox mode — no real money used), you can use the following test card:</p>
-            <p><strong>Card Number:</strong> 4242 4242 4242 4242</p>
-            <p><strong>Expiration Date:</strong> Any future date (e.g., 12/34)</p>
-            <p><strong>CVC:</strong>  Any 3 digits (e.g., 123)</p>
-          </div>
-          <button :disabled="isAllSold" class="btn" @click="handleStripeCheckout">Checkout with card</button>
         </div>
-      </template>
+      </div>
     </div>
   </div>
 </template>
@@ -126,63 +136,4 @@ watch(cart, () => {
 onMounted(fetchCart);
 </script>
 
-<style scoped>
-.cart-container {
-    background: var(--card-bg-color);
-    padding: 2rem;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-}
-.cart-items-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.sold {
-  color: #aaa;
-  cursor: default;
-  background-color: #f5f5f5;
-}
-.sold > *:not(button) {
-  opacity: 0.6;
-  text-decoration: line-through;
-  pointer-events: none;
-}
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid #eee;
-}
-.cart-item:last-child {
-    border-bottom: none;
-}
-.item-name {
-    font-weight: 500;
-}
-.cart-summary {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 2px solid #eee;
-    text-align: right;
-}
-.total-price {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
-}
-.total-price span {
-    color: #555;
-}
-.total-price strong {
-    margin-left: 1rem;
-    color: var(--secondary-color);
-}
-button:disabled {
-  opacity: 0.5;
-  background-color: #ccc;
-  color: #666;
-  cursor: not-allowed;
-  border: 1px solid #aaa;
-}
-</style>
+

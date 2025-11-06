@@ -1,23 +1,42 @@
 <template>
   <div id="app-container">
-    <header class="app-header">
-      <nav class="main-nav">
-        <router-link class="nav-brand" to="/">OnlineCourses</router-link>
-        <div class="nav-links">
-          <router-link to="/">Courses</router-link>
-          <router-link v-if="isLoggedIn" to="/my-courses">My Courses</router-link>
-        </div>
-        <div class="nav-auth">
-          <router-link v-if="isLoggedIn" to="/cart">Cart</router-link>
-          <template v-if="!isLoggedIn">
-            <router-link to="/login">Login</router-link>
-            <router-link to="/register">Register</router-link>
-          </template>
-          <a href="#" v-if="isLoggedIn" @click.prevent="logout">Logout</a>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <router-link class="navbar-brand" to="/">OnlineCourses</router-link>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <router-link class="nav-link" to="/">Courses</router-link>
+              </li>
+              <li class="nav-item" v-if="isLoggedIn">
+                <router-link class="nav-link" to="/my-courses">My Courses</router-link>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
+              <li class="nav-item" v-if="isLoggedIn">
+                <router-link class="nav-link" to="/cart">Cart</router-link>
+              </li>
+              <template v-if="!isLoggedIn">
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/login">Login</router-link>
+                </li>
+                <li class="nav-item">
+                  <router-link class="nav-link" to="/register">Register</router-link>
+                </li>
+              </template>
+              <li class="nav-item" v-if="isLoggedIn">
+                <a class="nav-link" href="#" @click.prevent="logout">Logout</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </header>
-    <main class="main-content">
+    <main class="main-content container-fluid">
       <router-view />
     </main>
 
@@ -133,98 +152,9 @@ body {
   width: 100%;
 }
 
-/* Header & Nav */
-.app-header {
-  background-color: var(--card-bg-color);
-  box-shadow: var(--box-shadow);
-  padding: 0 2rem;
-}
 
-.main-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
-.main-nav a {
-  color: var(--secondary-color);
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  transition: color 0.3s;
-}
 
-.main-nav a:hover, .main-nav a.router-link-exact-active {
-  color: var(--primary-color);
-}
-
-.nav-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.nav-links, .nav-auth {
-  display: flex;
-  gap: 1rem;
-}
-
-/* Form Styles */
-.form-container {
-  background: var(--card-bg-color);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-  max-width: 400px;
-  margin: 2rem auto;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-/* Button Styles */
-.btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 4px;
-  background-color: var(--primary-color);
-  color: white;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.3s;
-}
-
-.btn:hover {
-  background-color: #36a476;
-}
-
-.btn-danger {
-    background-color: #e74c3c;
-}
-.btn-danger:hover {
-    background-color: #c0392b;
-}
 
 /* Alert Styles */
 .alert {

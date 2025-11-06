@@ -2,11 +2,13 @@
   <div class="course-detail-view">
     <div v-if="loading" class="loading-spinner">Loading...</div>
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
-    <div v-if="course" class="course-content">
-      <div v-for="c in course">
-        <h1>{{c.order}}. {{ c.title }}</h1>
-        <hr>
-        <p class="description">{{ c.content }}</p>
+    <div v-if="course">
+      <div v-for="c in course" :key="c.id" class="card mb-3">
+        <div class="card-body">
+          <h1 class="card-title">{{c.order}}. {{ c.title }}</h1>
+          <hr>
+          <p class="card-text">{{ c.content }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -35,15 +37,4 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
-.course-content {
-  background: var(--card-bg-color);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-}
 
-.description {
-  line-height: 1.6;
-}
-</style>

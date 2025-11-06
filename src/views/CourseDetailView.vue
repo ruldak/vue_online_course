@@ -2,20 +2,22 @@
   <div class="course-detail-view">
     <div v-if="loading" class="loading-spinner">Loading...</div>
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
-    <div v-if="course" class="course-content">
-      <h1>{{ course.title }}</h1>
-      <p class="meta">
-        <span><strong>Instructor:</strong> {{ course.instructor_name }}</span>
-        <span><strong>Category:</strong> {{ course.category_name }}</span>
-      </p>
-      <p class="price">${{ course.price }}</p>
-      <hr>
-      <p class="description">{{ course.description }}</p>
-      <button class="btn" @click="handleAddToCart" :disabled="isAdding">
-        {{ isAdding ? 'Adding...' : 'Add to Cart' }}
-      </button>
-      <div v-if="addError" class="alert alert-danger">{{ addError }}</div>
-      <div v-if="addSuccess" class="alert alert-success">Course added to cart!</div>
+    <div v-if="course" class="card">
+      <div class="card-body">
+        <h1 class="card-title">{{ course.title }}</h1>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <span><strong>Instructor:</strong> {{ course.instructor_name }}</span>
+          <span class="ms-3"><strong>Category:</strong> {{ course.category_name }}</span>
+        </h6>
+        <p class="card-text fs-4 fw-bold">${{ course.price }}</p>
+        <hr>
+        <p class="card-text">{{ course.description }}</p>
+        <button class="btn btn-primary" @click="handleAddToCart" :disabled="isAdding">
+          {{ isAdding ? 'Adding...' : 'Add to Cart' }}
+        </button>
+        <div v-if="addError" class="alert alert-danger mt-3">{{ addError }}</div>
+        <div v-if="addSuccess" class="alert alert-success mt-3">Course added to cart!</div>
+      </div>
     </div>
   </div>
 </template>
@@ -66,33 +68,4 @@ const handleAddToCart = async () => {
 };
 </script>
 
-<style scoped>
-.course-content {
-  background: var(--card-bg-color);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--box-shadow);
-}
 
-.meta {
-  display: flex;
-  gap: 2rem;
-  color: #555;
-  margin-bottom: 1rem;
-}
-
-.price {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-}
-
-.description {
-  line-height: 1.6;
-}
-
-.btn {
-  margin-top: 1.5rem;
-}
-</style>
